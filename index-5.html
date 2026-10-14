@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b16">
+  <title>OFFICIAL STORE | Saluran Resmi</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#080b16;--card:rgba(19,25,47,.88);--primary:#7657ff;--cyan:#20e3ff;--text:#fff;--muted:#a6aec8}
+    body{min-height:100vh;padding:28px 16px;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(ellipse at top,#20245b 0%,transparent 48%),radial-gradient(ellipse at bottom right,#112e42 0%,transparent 45%),var(--bg);display:flex;justify-content:center;align-items:center;overflow-x:hidden}
+    .container{width:100%;max-width:470px;margin:auto}
+    .hero{text-align:center;margin-bottom:27px;animation:fadeIn .8s ease both}
+    body.locked{overflow:hidden}
+    .intro-screen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse at 50% 25%,#29276c 0%,transparent 48%),radial-gradient(ellipse at 80% 90%,#123b51 0%,transparent 42%),#070914;transition:opacity .7s ease,visibility .7s ease}
+    .intro-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .intro-content{width:100%;max-width:420px;text-align:center;animation:introRise 1s cubic-bezier(.2,.8,.2,1) both}
+    .intro-emblem{position:relative;width:116px;height:116px;margin:0 auto 28px;border-radius:34px;display:grid;place-items:center;font-size:49px;background:linear-gradient(135deg,#7657ff,#20e3ff);box-shadow:0 0 35px #7657ff77,0 0 85px #20e3ff25;animation:emblemFloat 3s ease-in-out infinite}
+    .intro-emblem:before{content:"";position:absolute;inset:-10px;border:1px solid #a99bff70;border-radius:40px;animation:orbitPulse 2.5s ease-in-out infinite}
+    .intro-kicker{color:#8fefff;font-size:11px;font-weight:800;letter-spacing:4px;margin-bottom:13px}
+    .intro-title{font-size:clamp(29px,8vw,42px);font-weight:900;letter-spacing:1.5px;background:linear-gradient(90deg,#fff,#8deaff,#b7a5ff);color:transparent;background-clip:text;-webkit-background-clip:text}
+    .intro-description{margin:15px auto 27px;max-width:300px;color:#aeb7d4;font-size:13px;line-height:1.8}
+    .enter-button{width:100%;max-width:300px;min-height:55px;border:0;border-radius:16px;color:white;font-size:14px;font-weight:900;letter-spacing:1px;cursor:pointer;background:linear-gradient(100deg,#7657ff,#a13dff,#398cff);background-size:200% 100%;box-shadow:0 10px 35px #7657ff55;animation:gradientMove 3s linear infinite;transition:transform .2s,filter .2s}
+    .enter-button:active{transform:scale(.96);filter:brightness(.85)}
+    .intro-note{margin-top:15px;color:#7783a8;font-size:10px;letter-spacing:.5px}
+    .intro-spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#9eeeff;box-shadow:0 0 13px #20e3ff;animation:sparkle 3s ease-in-out infinite}
+    .intro-spark.one{top:20%;left:15%}.intro-spark.two{top:32%;right:13%;animation-delay:.7s}.intro-spark.three{bottom:22%;left:22%;animation-delay:1.3s}.intro-spark.four{bottom:17%;right:19%;animation-delay:1.8s}
+    .logo{width:88px;height:88px;margin:0 auto 18px;border-radius:27px;display:flex;justify-content:center;align-items:center;font-size:39px;background:linear-gradient(135deg,#7657ff,#20e3ff);box-shadow:0 0 38px #7657ff55;transform:rotate(-4deg)}
+    .logo span{transform:rotate(4deg)}
+    h1{font-size:clamp(25px,7vw,34px);font-weight:900;letter-spacing:1px;background:linear-gradient(90deg,#fff,#9beaff,#b8a7ff);color:transparent;background-clip:text;-webkit-background-clip:text}
+    .subtitle{margin-top:11px;color:var(--muted);font-size:13px;line-height:1.7}
+    .badge{display:inline-flex;align-items:center;gap:7px;margin-top:17px;padding:8px 13px;border-radius:30px;border:1px solid #20e3ff45;background:#20e3ff0c;color:#79edff;font-size:11px;font-weight:bold;letter-spacing:1px}
+    .section-title{margin:25px 0 13px;font-size:12px;font-weight:bold;letter-spacing:2px;color:#aeb9dc}
+    .card{position:relative;overflow:hidden;padding:19px;margin-bottom:13px;border:1px solid #ffffff13;border-radius:19px;background:var(--card);box-shadow:0 12px 35px #00000020;backdrop-filter:blur(15px);animation:slideUp .65s ease both}
+    .channel{display:flex;align-items:center;gap:13px}
+    .channel-icon{width:48px;height:48px;flex-shrink:0;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:25px;background:linear-gradient(135deg,#20c978,#087d58);box-shadow:0 5px 20px #20c97825}
+    .channel-info{flex:1;min-width:0}
+    .channel-info h2{font-size:15px;margin-bottom:6px}
+    .channel-info p{color:var(--muted);font-size:11px;line-height:1.5}
+    .number{display:inline-block;margin-top:7px;color:#7ceec0;font-size:10px;font-weight:bold;letter-spacing:1px}
+    .button{width:100%;min-height:47px;margin-top:15px;border:0;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;color:white;font-size:13px;font-weight:800;letter-spacing:.4px;cursor:pointer;transition:transform .2s,filter .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
+    .button:active{transform:scale(.96);filter:brightness(.85)}
+    .whatsapp-button{background:linear-gradient(100deg,#13b86c,#087c56);box-shadow:0 7px 22px #13b86c25}
+    .store-card{border-color:#7657ff66;background:linear-gradient(145deg,#24204cdd,#10182bdd)}
+    .store-card .channel-icon{background:linear-gradient(135deg,#7657ff,#b14dff);box-shadow:0 5px 22px #7657ff40}
+    .store-label{display:inline-block;color:#c6baff;font-size:10px;font-weight:bold;letter-spacing:1.5px;margin-bottom:7px}
+    .store-button{min-height:53px;background:linear-gradient(100deg,#7657ff,#a13dff,#4d79ff);background-size:200% 100%;box-shadow:0 8px 28px #7657ff40;animation:gradientMove 4s linear infinite}
+    .store-button .arrow{font-size:19px;transition:transform .2s}
+    .store-button:hover .arrow{transform:translateX(5px)}
+    .divider{height:1px;margin:23px 0;background:linear-gradient(90deg,transparent,#ffffff30,transparent)}
+    .footer{text-align:center;margin-top:25px;color:#78819e;font-size:11px;line-height:1.9}
+    .footer strong{color:#b8a7ff}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes introRise{from{opacity:0;transform:translateY(25px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes emblemFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-9px) rotate(3deg)}}
+    @keyframes orbitPulse{0%,100%{transform:scale(1);opacity:.35}50%{transform:scale(1.08);opacity:.9}}
+    @keyframes sparkle{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1.5)}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes gradientMove{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+    @media(hover:hover){.button:hover{filter:brightness(1.13);transform:translateY(-2px)}.card:hover{border-color:#ffffff30}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body class="locked">
+  <section class="intro-screen" id="introScreen" aria-label="Pembuka website">
+    <span class="intro-spark one"></span><span class="intro-spark two"></span>
+    <span class="intro-spark three"></span><span class="intro-spark four"></span>
+    <div class="intro-content">
+      <div class="intro-emblem" aria-hidden="true">👑</div>
+      <div class="intro-kicker">WELCOME TO</div>
+      <h1 class="intro-title">OFFICIAL STORE</h1>
+      <p class="intro-description">Saluran resmi dan website toko dalam satu tempat.<br>Siap masuk dan menjelajah?</p>
+      <button class="enter-button" id="enterButton" type="button">🚀 MASUK KE MENU SALURAN</button>
+      <p class="intro-note">KLIK UNTUK MELIHAT MENU SALURAN</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <header class="hero">
+      <div class="logo"><span>👑</span></div>
+      <h1>OFFICIAL STORE</h1>
+      <p class="subtitle">Selamat datang di pusat saluran resmi kami.<br>Pilih saluran di bawah untuk bergabung!</p>
+      <div class="badge"><span>✦</span> OFFICIAL CHANNELS</div>
+    </header>
+
+    <div class="section-title">✦ SALURAN WHATSAPP</div>
+
+    <section class="card" style="animation-delay:.10s">
+      <div class="channel">
+        <div class="channel-icon">📢</div>
+        <div class="channel-info">
+          <h2>Saluran WhatsApp 01</h2>
+          <p>Ikuti saluran pertama untuk mendapatkan informasi terbaru.</p>
+          <span class="number">CHANNEL #01</span>
+        </div>
+      </div>
+      <a class="button whatsapp-button" href="https://whatsapp.com/channel/0029Vb7Atub96H4Whbd17o3E" target="_blank" rel="noopener noreferrer">💬 GABUNG SALURAN 1 ↗</a>
+    </section>
+
+    <section class="card" style="animation-delay:.20s">
+      <div class="channel">
+        <div class="channel-icon">📢</div>
+        <div class="channel-info">
+          <h2>Saluran WhatsApp 02</h2>
+          <p>Temukan informasi dan update dari saluran kedua.</p>
+          <span class="number">CHANNEL #02</span>
+        </div>
+      </div>
+      <a class="button whatsapp-button" href="https://whatsapp.com/channel/0029VbCtCkuAojYxWy8Ufw3n" target="_blank" rel="noopener noreferrer">💬 GABUNG SALURAN 2 ↗</a>
+    </section>
+
+    <section class="card" style="animation-delay:.30s">
+      <div class="channel">
+        <div class="channel-icon">📢</div>
+        <div class="channel-info">
+          <h2>Saluran WhatsApp 03</h2>
+          <p>Gabung saluran ketiga agar tidak ketinggalan informasi.</p>
+          <span class="number">CHANNEL #03</span>
+        </div>
+      </div>
+      <a class="button whatsapp-button" href="https://whatsapp.com/channel/0029Vb94K7L6BIEkEeqaEK34" target="_blank" rel="noopener noreferrer">💬 GABUNG SALURAN 3 ↗</a>
+    </section>
+
+    <div class="divider"></div>
+    <div class="section-title">✦ WEBSITE OFFICIAL STORE</div>
+
+    <section class="card store-card" style="animation-delay:.40s">
+      <div class="channel">
+        <div class="channel-icon">🛍️</div>
+        <div class="channel-info">
+          <span class="store-label">OFFICIAL WEBSITE</span>
+          <h2>Website Store</h2>
+          <p>Kunjungi website toko untuk melihat produk yang tersedia.</p>
+        </div>
+      </div>
+      <a class="button store-button" href="https://prokekx-png.github.io/WEBSET_STOR-/" target="_blank" rel="noopener noreferrer">🛒 BELI PANEL ANTI BENED SINI <span class="arrow">➜</span></a>
+    </section>
+
+    <footer class="footer">
+      <strong>👑 OFFICIAL STORE</strong><br>
+      Terima kasih telah mengunjungi website kami.<br>
+      &copy; <span id="year"></span> Official Store. All rights reserved.
+    </footer>
+  </main>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Halaman utama hanya dibuka setelah tombol masuk diklik manual.
+    const introScreen = document.getElementById("introScreen");
+    const enterButton = document.getElementById("enterButton");
+
+    enterButton.addEventListener("click", () => {
+      introScreen.classList.add("hidden");
+      document.body.classList.remove("locked");
+      window.setTimeout(() => introScreen.remove(), 750);
+    });
+  </script>
+</body>
+</html>
